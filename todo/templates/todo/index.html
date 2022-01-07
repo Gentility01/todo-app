@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
+
+    <title>Todo List</title>
+  </head>
+  <body>
+<div class=" container-fluid">
+    <div class="card mx-auto" style="width: 60rem; margin-top:40px">
+        <div class="card-body">
+            {% comment %} <h5 class="card-title">Todo List App</h5> {% endcomment %}
+        
+            <p class="card-text">
+                <form action="{% url 'addview' %}" method="POST">
+                {% csrf_token %} 
+                    <div class="mb-3">
+                    <label for="exampleInputEmail1" class="form-label"><h2>Todo List App</h2></label>
+                    <!-- <input type="text" class="form-control"  placeholder="Enter your list here"> -->
+                    {{todo_form.content}}
+                    
+                    </div>
+                
+                </p>
+            
+                <button type="submit" class="btn btn-success">Add</button>
+                
+                <a href="{% url 'deletecompleted' %}"><button type="button" class="btn btn-secondary">Delete Completed</button></a>
+                <a href="{% url 'deletedall' %}"><button type="button" class="btn btn-danger">Delete All</button></a>
+            </form>
+            
+        </div>
+        {% for list in todo %}
+            {% if list.complete %}
+                <ul  style="color: gray; list-style: none; text-decoration:none">
+                    <li>{{list.content}}</li>
+                </ul>
+            {% else %}
+                <a href="{% url 'complete' list.id %}">
+                    <ul style="list-style: none;">
+                        <li>{{list.content}}</li>
+                    </ul>
+                </a>
+            {% endif %}
+        {% endfor %}
+
+    </div> 
+    
+</div>
+<br>
+    
+    
+    
+
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ" crossorigin="anonymous"></script>
+
+  </body>
+</html>
